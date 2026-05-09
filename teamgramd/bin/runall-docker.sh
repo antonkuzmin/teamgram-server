@@ -4,6 +4,10 @@
 
 #mkdir -p ../logs
 
+echo "run otp-tg-sender ..."
+./otp-tg-sender &
+sleep 1
+
 echo "run idgen ..."
 ./idgen -f=../etc2/idgen.yaml &
 sleep 1

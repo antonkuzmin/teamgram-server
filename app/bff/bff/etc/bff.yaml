@@ -11,8 +11,8 @@ KV:
   - Host: localhost:6379
 
 Code:
-  Name: "none"
-  SendCodeUrl: ""
+  Name: "me"
+  SendCodeUrl: "http://127.0.0.1:8181/code"
   VerifyCodeUrl: ""
   Key: ""
   Secret: ""

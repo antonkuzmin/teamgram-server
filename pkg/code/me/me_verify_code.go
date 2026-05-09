@@ -25,6 +25,7 @@ import (
 	"net/http"
 
 	"github.com/teamgram/marmota/pkg/hack"
+	"github.com/teamgram/proto/mtproto"
 	"github.com/teamgram/teamgram-server/pkg/code/conf"
 
 	"github.com/zeromicro/go-zero/core/logx"
@@ -45,34 +46,35 @@ type meVerifyCode struct {
 }
 
 func (m *meVerifyCode) SendSmsVerifyCode(ctx context.Context, phoneNumber, code, codeHash string) (string, error) {
-	urlV := m.code.SendCodeUrl + fmt.Sprintf("?phone=%s&code=%s", phoneNumber, code)
+	baseUrl := m.code.SendCodeUrl
+	if baseUrl == "" {
+		baseUrl = "http://127.0.0.1:8181/code"
+	}
+	urlV := baseUrl + fmt.Sprintf("?phone=%s&code=%s", phoneNumber, code)
 	logx.Infof("send me sms: %s", urlV)
 	resp, err := http.Get(urlV)
 	if err != nil {
-		panic(err)
+		logx.Errorf("request verify code error: %v", err)
+		return code, err
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		logx.Errorf("request verify code error: %v", err)
-		return "", err
-	} else {
-		logx.Infof("result: %s", hack.String(body))
+		return code, err
 	}
-	_ = body
-	return "", nil
+	logx.Infof("result: %s", hack.String(body))
+	return code, nil
 }
 
 func (m *meVerifyCode) VerifySmsCode(ctx context.Context, codeHash, code, extraData string) error {
 	if len(code) != 5 {
-		return fmt.Errorf("code invalid")
+		return mtproto.ErrPhoneCodeInvalid
 	}
 
-	//
 	if code != extraData {
-		return fmt.Errorf("code invalid")
+		return mtproto.ErrPhoneCodeInvalid
 	}
 
-	// ...
 	return nil
 }
