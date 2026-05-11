@@ -1,10 +1,11 @@
-FROM golang:1.23.0 AS builder
+FROM golang:1.23.0-alpine AS builder
+RUN apk add --no-cache gcc musl-dev libwebp-dev
 WORKDIR /app
 COPY . .
-RUN ./build.sh
+RUN CGO_ENABLED=1 ./build-static.sh
 
-FROM ubuntu:latest
-RUN apt update -y && apt install -y ffmpeg psmisc && apt-get clean
+FROM alpine:latest
+RUN apk add --no-cache bash ffmpeg psmisc
 WORKDIR /app
 COPY --from=builder /app/teamgramd/ /app/
 RUN chmod +x /app/docker/entrypoint.sh
