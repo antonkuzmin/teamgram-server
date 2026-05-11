@@ -55,6 +55,8 @@ func main() {
 			Dial: dialer.Dial,
 		}
 		log.Printf("using SOCKS5 proxy: %s", proxyURL.Host)
+	} else {
+		log.Printf("SOCKS5_PROXY not set, connecting directly")
 	}
 
 	http.HandleFunc("/code", func(w http.ResponseWriter, r *http.Request) {

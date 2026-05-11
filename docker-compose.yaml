@@ -4,6 +4,7 @@ services:
     restart: always
     environment:
       TG_BOT_TOKEN: ${TG_BOT_TOKEN}
+      SOCKS5_PROXY: ${SOCKS5_PROXY}
     ports:
       - "10443:10443"
       - "11443:11443"
