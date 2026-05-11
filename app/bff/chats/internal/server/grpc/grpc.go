@@ -24,6 +24,7 @@ import (
 func New(ctx *svc.ServiceContext, c zrpc.RpcServerConf) *zrpc.RpcServer {
 	s, err := zrpc.NewServer(c, func(grpcServer *grpc.Server) {
 		mtproto.RegisterRPCChatsServer(grpcServer, service.New(ctx))
+		mtproto.RegisterRPCReactionsServer(grpcServer, service.New(ctx))
 	})
 	logx.Must(err)
 	return s

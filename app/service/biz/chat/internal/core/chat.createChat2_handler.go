@@ -55,7 +55,7 @@ func (c *ChatCore) ChatCreateChat2(in *chat.TLChatCreateChat2) (*mtproto.Mutable
 		DefaultBannedRights:    int64(mtproto.MakeDefaultBannedRights().ToBannedRights()),
 		MigratedToId:           0,
 		MigratedToAccessHash:   0,
-		AvailableReactionsType: 0,
+		AvailableReactionsType: mtproto.ChatReactionsTypeAllNoAllowCustom,
 		AvailableReactions:     "",
 		Deactivated:            false,
 		Noforwards:             false,

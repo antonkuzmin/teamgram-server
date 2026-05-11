@@ -11,10 +11,12 @@
 package service
 
 import (
+	"github.com/teamgram/proto/mtproto"
 	"github.com/teamgram/teamgram-server/app/bff/chats/internal/svc"
 )
 
 type Service struct {
+	mtproto.UnimplementedRPCReactionsServer
 	svcCtx *svc.ServiceContext
 }
 

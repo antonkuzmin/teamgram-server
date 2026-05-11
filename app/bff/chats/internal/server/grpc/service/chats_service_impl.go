@@ -362,6 +362,21 @@ func (s *Service) MessagesGetMessageReadParticipants2C6F97B7(ctx context.Context
 	return r, err
 }
 
+// MessagesSetChatAvailableReactions
+// messages.setChatAvailableReactions#feb16771 peer:InputPeer available_reactions:ChatReactions reactions_limit:flags.2?int paid_enabled:flags.3?Bool = Updates;
+func (s *Service) MessagesSetChatAvailableReactions(ctx context.Context, request *mtproto.TLMessagesSetChatAvailableReactions) (*mtproto.Updates, error) {
+	c := core.New(ctx, s.svcCtx)
+	c.Logger.Debugf("messages.setChatAvailableReactions - metadata: {%s}, request: {%s}", c.MD, request)
+
+	r, err := c.MessagesSetChatAvailableReactions(request)
+	if err != nil {
+		return nil, err
+	}
+
+	c.Logger.Debugf("messages.setChatAvailableReactions - reply: {%s}", r)
+	return r, err
+}
+
 // MessagesCreateChat9CB126E
 // messages.createChat#9cb126e users:Vector<InputUser> title:string = Updates;
 func (s *Service) MessagesCreateChat9CB126E(ctx context.Context, request *mtproto.TLMessagesCreateChat9CB126E) (*mtproto.Updates, error) {

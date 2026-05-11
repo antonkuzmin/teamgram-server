@@ -4,6 +4,9 @@ WORKDIR /app
 COPY . .
 RUN CGO_ENABLED=1 ./build-static.sh
 
+ENV GOMEMLIMIT=2GiB
+ENV GOMAXPROCS=1
+
 FROM alpine:latest
 RUN apk add --no-cache bash ffmpeg psmisc
 WORKDIR /app
