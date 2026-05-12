@@ -391,3 +391,18 @@ func (s *Service) MessagesCreateChat9CB126E(ctx context.Context, request *mtprot
 	c.Logger.Debugf("messages.createChat9CB126E - reply: {%s}", r)
 	return r, err
 }
+
+// MessagesGetAvailableReactions
+// messages.getAvailableReactions#18dea0ac hash:int = messages.AvailableReactions;
+func (s *Service) MessagesGetAvailableReactions(ctx context.Context, request *mtproto.TLMessagesGetAvailableReactions) (*mtproto.Messages_AvailableReactions, error) {
+	c := core.New(ctx, s.svcCtx)
+	c.Logger.Debugf("messages.getAvailableReactions - metadata: {%s}, request: {%s}", c.MD, request)
+
+	r, err := c.MessagesGetAvailableReactions(request)
+	if err != nil {
+		return nil, err
+	}
+
+	c.Logger.Debugf("messages.getAvailableReactions - reply: {%s}", r)
+	return r, err
+}
