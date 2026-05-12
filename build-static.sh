@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+export GOMEMLIMIT=3GiB
+export GOMAXPROCS=1
+
 PWD=`pwd`
 TEAMGRAMAPP=${PWD}"/app"
 INSTALL=${PWD}"/teamgramd"
