@@ -80,8 +80,16 @@ var defaultAvailableReactions = []*mtproto.AvailableReaction{
 }
 
 func (c *ChatsCore) MessagesGetAvailableReactions(in *mtproto.TLMessagesGetAvailableReactions) (*mtproto.Messages_AvailableReactions, error) {
+	reactions := make([]*mtproto.AvailableReaction, 0, len(defaultAvailableReactions))
+	for _, r := range defaultAvailableReactions {
+		reactions = append(reactions, mtproto.MakeTLAvailableReaction(&mtproto.AvailableReaction{
+			Reaction: r.Reaction,
+			Title:    r.Title,
+		}).To_AvailableReaction())
+	}
+
 	return mtproto.MakeTLMessagesAvailableReactions(&mtproto.Messages_AvailableReactions{
 		Hash:      int32(in.GetHash()),
-		Reactions: defaultAvailableReactions,
+		Reactions: reactions,
 	}).To_Messages_AvailableReactions(), nil
 }

@@ -22,16 +22,36 @@ import (
 	"github.com/teamgram/proto/mtproto"
 )
 
+func buildAppConfigJSON() *mtproto.JSONValue {
+	return mtproto.MakeTLJsonObject(&mtproto.JSONValue{
+		Value_VECTORJSONOBJECTVALUE: []*mtproto.JSONObjectValue{
+			mtproto.MakeTLJsonObjectValue(&mtproto.JSONObjectValue{
+				Key: "reactions_chat",
+				Value: mtproto.MakeTLJsonBool(&mtproto.JSONValue{
+					Value_BOOL: mtproto.BoolTrue,
+				}).To_JSONValue(),
+			}).To_JSONObjectValue(),
+			mtproto.MakeTLJsonObjectValue(&mtproto.JSONObjectValue{
+				Key: "reactions_default",
+				Value: mtproto.MakeTLJsonString(&mtproto.JSONValue{
+					Value_STRING: "👍",
+				}).To_JSONValue(),
+			}).To_JSONObjectValue(),
+			mtproto.MakeTLJsonObjectValue(&mtproto.JSONObjectValue{
+				Key: "reactions_uniq_max",
+				Value: mtproto.MakeTLJsonNumber(&mtproto.JSONValue{
+					Value_FLOAT64: 1,
+				}).To_JSONValue(),
+			}).To_JSONObjectValue(),
+		},
+	}).To_JSONValue()
+}
+
 // HelpGetAppConfig61E3F854
 // help.getAppConfig#61e3f854 hash:int = help.AppConfig;
 func (c *ConfigurationCore) HelpGetAppConfig61E3F854(in *mtproto.TLHelpGetAppConfig61E3F854) (*mtproto.Help_AppConfig, error) {
-	// TODO: not impl
-	c.Logger.Errorf("help.getAppConfig blocked, License key from https://teamgram.net required to unlock enterprise features.")
-
 	return mtproto.MakeTLHelpAppConfig(&mtproto.Help_AppConfig{
-		Hash: 0,
-		Config: mtproto.MakeTLJsonObject(&mtproto.JSONValue{
-			Value_VECTORJSONOBJECTVALUE: []*mtproto.JSONObjectValue{},
-		}).To_JSONValue(),
+		Hash:   0,
+		Config: buildAppConfigJSON(),
 	}).To_Help_AppConfig(), nil
 }
