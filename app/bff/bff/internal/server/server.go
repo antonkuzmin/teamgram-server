@@ -148,20 +148,21 @@ func (s *Server) Initialize() error {
 			}))
 
 		// chats_helper
-		mtproto.RegisterRPCChatsServer(
-			grpcServer,
-			chats_helper.New(chats_helper.Config{
-				RpcServerConf:     c.RpcServerConf,
-				UserClient:        c.BizServiceClient,
-				ChatClient:        c.BizServiceClient,
-				MsgClient:         c.MsgClient,
-				DialogClient:      c.BizServiceClient,
-				SyncClient:        c.SyncClient,
-				MediaClient:       c.MediaClient,
-				AuthsessionClient: c.AuthSessionClient,
-				IdgenClient:       c.IdgenClient,
-				MessageClient:     c.BizServiceClient,
-			}))
+		chatsSvc := chats_helper.New(chats_helper.Config{
+			RpcServerConf:     c.RpcServerConf,
+			UserClient:        c.BizServiceClient,
+			ChatClient:        c.BizServiceClient,
+			MsgClient:         c.MsgClient,
+			DialogClient:      c.BizServiceClient,
+			SyncClient:        c.SyncClient,
+			MediaClient:       c.MediaClient,
+			AuthsessionClient: c.AuthSessionClient,
+			IdgenClient:       c.IdgenClient,
+			MessageClient:     c.BizServiceClient,
+		})
+
+		mtproto.RegisterRPCChatsServer(grpcServer, chatsSvc)
+		mtproto.RegisterRPCReactionsServer(grpcServer, chatsSvc)
 
 		// files_helper
 		mtproto.RegisterRPCFilesServer(
