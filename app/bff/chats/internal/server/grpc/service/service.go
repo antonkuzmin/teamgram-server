@@ -17,6 +17,7 @@ import (
 
 type Service struct {
 	mtproto.UnimplementedRPCReactionsServer
+	mtproto.UnimplementedRPCSavedMessageTagsServer
 	svcCtx *svc.ServiceContext
 }
 

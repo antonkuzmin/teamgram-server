@@ -163,6 +163,7 @@ func (s *Server) Initialize() error {
 
 		mtproto.RegisterRPCChatsServer(grpcServer, chatsSvc)
 		mtproto.RegisterRPCReactionsServer(grpcServer, chatsSvc)
+		mtproto.RegisterRPCSavedMessageTagsServer(grpcServer, chatsSvc)
 
 		// files_helper
 		mtproto.RegisterRPCFilesServer(

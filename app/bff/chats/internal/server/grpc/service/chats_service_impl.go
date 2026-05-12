@@ -406,3 +406,48 @@ func (s *Service) MessagesGetAvailableReactions(ctx context.Context, request *mt
 	c.Logger.Debugf("messages.getAvailableReactions - reply: {%s}", r)
 	return r, err
 }
+
+// MessagesGetTopReactions
+// messages.getTopReactions#bb8125ba limit:int hash:long = messages.Reactions;
+func (s *Service) MessagesGetTopReactions(ctx context.Context, request *mtproto.TLMessagesGetTopReactions) (*mtproto.Messages_Reactions, error) {
+	c := core.New(ctx, s.svcCtx)
+	c.Logger.Debugf("messages.getTopReactions - metadata: {%s}, request: {%s}", c.MD, request)
+
+	r, err := c.MessagesGetTopReactions(request)
+	if err != nil {
+		return nil, err
+	}
+
+	c.Logger.Debugf("messages.getTopReactions - reply: {%s}", r)
+	return r, err
+}
+
+// MessagesGetRecentReactions
+// messages.getRecentReactions#412b0b1e limit:int hash:long = messages.Reactions;
+func (s *Service) MessagesGetRecentReactions(ctx context.Context, request *mtproto.TLMessagesGetRecentReactions) (*mtproto.Messages_Reactions, error) {
+	c := core.New(ctx, s.svcCtx)
+	c.Logger.Debugf("messages.getRecentReactions - metadata: {%s}, request: {%s}", c.MD, request)
+
+	r, err := c.MessagesGetRecentReactions(request)
+	if err != nil {
+		return nil, err
+	}
+
+	c.Logger.Debugf("messages.getRecentReactions - reply: {%s}", r)
+	return r, err
+}
+
+// MessagesGetDefaultTagReactions
+// messages.getDefaultTagReactions#d499b22a hash:long = messages.Reactions;
+func (s *Service) MessagesGetDefaultTagReactions(ctx context.Context, request *mtproto.TLMessagesGetDefaultTagReactions) (*mtproto.Messages_Reactions, error) {
+	c := core.New(ctx, s.svcCtx)
+	c.Logger.Debugf("messages.getDefaultTagReactions - metadata: {%s}, request: {%s}", c.MD, request)
+
+	r, err := c.MessagesGetDefaultTagReactions(request)
+	if err != nil {
+		return nil, err
+	}
+
+	c.Logger.Debugf("messages.getDefaultTagReactions - reply: {%s}", r)
+	return r, err
+}
