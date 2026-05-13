@@ -4,94 +4,21 @@ import (
 	"github.com/teamgram/proto/mtproto"
 )
 
-var defaultAvailableReactions = []*mtproto.AvailableReaction{
-	{Reaction: "👍", Title: "👍"},
-	{Reaction: "👎", Title: "👎"},
-	{Reaction: "❤️", Title: "❤️"},
-	{Reaction: "🔥", Title: "🔥"},
-	{Reaction: "🥰", Title: "🥰"},
-	{Reaction: "👏", Title: "👏"},
-	{Reaction: "😁", Title: "😁"},
-	{Reaction: "🤔", Title: "🤔"},
-	{Reaction: "🤯", Title: "🤯"},
-	{Reaction: "😱", Title: "😱"},
-	{Reaction: "🤬", Title: "🤬"},
-	{Reaction: "😢", Title: "😢"},
-	{Reaction: "🎉", Title: "🎉"},
-	{Reaction: "🤩", Title: "🤩"},
-	{Reaction: "🤮", Title: "🤮"},
-	{Reaction: "💩", Title: "💩"},
-	{Reaction: "🙏", Title: "🙏"},
-	{Reaction: "👌", Title: "👌"},
-	{Reaction: "🕊️", Title: "🕊️"},
-	{Reaction: "🤡", Title: "🤡"},
-	{Reaction: "🥱", Title: "🥱"},
-	{Reaction: "🥴", Title: "🥴"},
-	{Reaction: "😍", Title: "😍"},
-	{Reaction: "🐳", Title: "🐳"},
-	{Reaction: "🌚", Title: "🌚"},
-	{Reaction: "🌭", Title: "🌭"},
-	{Reaction: "💯", Title: "💯"},
-	{Reaction: "🤣", Title: "🤣"},
-	{Reaction: "⚡️", Title: "⚡️"},
-	{Reaction: "🍌", Title: "🍌"},
-	{Reaction: "🏆", Title: "🏆"},
-	{Reaction: "💔", Title: "💔"},
-	{Reaction: "🤨", Title: "🤨"},
-	{Reaction: "😐", Title: "😐"},
-	{Reaction: "🍓", Title: "🍓"},
-	{Reaction: "🍾", Title: "🍾"},
-	{Reaction: "💋", Title: "💋"},
-	{Reaction: "🖕", Title: "🖕"},
-	{Reaction: "😈", Title: "😈"},
-	{Reaction: "😴", Title: "😴"},
-	{Reaction: "😭", Title: "😭"},
-	{Reaction: "🤓", Title: "🤓"},
-	{Reaction: "👻", Title: "👻"},
-	{Reaction: "👨‍💻", Title: "👨‍💻"},
-	{Reaction: "👀", Title: "👀"},
-	{Reaction: "🎃", Title: "🎃"},
-	{Reaction: "🙈", Title: "🙈"},
-	{Reaction: "😇", Title: "😇"},
-	{Reaction: "😨", Title: "😨"},
-	{Reaction: "🤝", Title: "🤝"},
-	{Reaction: "✍️", Title: "✍️"},
-	{Reaction: "🤗", Title: "🤗"},
-	{Reaction: "🫡", Title: "🫡"},
-	{Reaction: "🎅", Title: "🎅"},
-	{Reaction: "🎄", Title: "🎄"},
-	{Reaction: "☃️", Title: "☃️"},
-	{Reaction: "💅", Title: "💅"},
-	{Reaction: "🤪", Title: "🤪"},
-	{Reaction: "🗿", Title: "🗿"},
-	{Reaction: "🆒", Title: "🆒"},
-	{Reaction: "💘", Title: "💘"},
-	{Reaction: "🙉", Title: "🙉"},
-	{Reaction: "🦄", Title: "🦄"},
-	{Reaction: "😘", Title: "😘"},
-	{Reaction: "💊", Title: "💊"},
-	{Reaction: "🙊", Title: "🙊"},
-	{Reaction: "😎", Title: "😎"},
-	{Reaction: "👾", Title: "👾"},
-	{Reaction: "🤷‍♂️", Title: "🤷‍♂️"},
-	{Reaction: "🤷", Title: "🤷"},
-	{Reaction: "🤷‍♀️", Title: "🤷‍♀️"},
-	{Reaction: "😡", Title: "😡"},
-}
-
 func (c *ChatsCore) MessagesGetAvailableReactions(in *mtproto.TLMessagesGetAvailableReactions) (*mtproto.Messages_AvailableReactions, error) {
-	emptyDoc := mtproto.MakeTLDocumentEmpty(nil).To_Document()
-
 	reactions := make([]*mtproto.AvailableReaction, 0, len(defaultAvailableReactions))
-	for _, r := range defaultAvailableReactions {
+	for _, def := range defaultAvailableReactions {
+		doc := emojiDocuments[def.Emoji]
+		if doc == nil {
+			continue
+		}
 		reactions = append(reactions, mtproto.MakeTLAvailableReaction(&mtproto.AvailableReaction{
-			Reaction:          r.Reaction,
-			Title:             r.Title,
-			StaticIcon:        emptyDoc,
-			AppearAnimation:   emptyDoc,
-			SelectAnimation:   emptyDoc,
-			ActivateAnimation: emptyDoc,
-			EffectAnimation:   emptyDoc,
+			Reaction:          def.Emoji,
+			Title:             def.Emoji,
+			StaticIcon:        doc,
+			AppearAnimation:   doc,
+			SelectAnimation:   doc,
+			ActivateAnimation: doc,
+			EffectAnimation:   doc,
 		}).To_AvailableReaction())
 	}
 
